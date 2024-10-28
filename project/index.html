@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced Factorial Calculator</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+  <!-- React and ReactDOM CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js" crossorigin></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js" crossorigin></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+
+  <!-- Main Container for React App -->
+  <div id="root"></div>
+
+  <script type="text/javascript">
+    // Function to calculate factorial
+    function calculateFactorial(num) {
+      if (num < 0) return "Invalid input";
+      if (num === 0 || num === 1) return 1;
+      let factorial = 1;
+      for (let i = 1; i <= num; i++) {
+        factorial *= i;
+      }
+      return factorial;
+    }
+
+    // Factorial Calculator Component
+    const FactorialCalculator = () => {
+      const [inputValue, setInputValue] = React.useState("");
+      const [result, setResult] = React.useState(null);
+
+      const handleCalculate = () => {
+        const number = parseInt(inputValue);
+        if (isNaN(number) || number < 0) {
+          setResult("Please enter a non-negative integer.");
+        } else {
+          const factorialResult = calculateFactorial(number);
+          setResult(`Factorial of ${number} is ${factorialResult}`);
+        }
+      };
+
+      return (
+        <div className="bg-white p-8 rounded-lg shadow-md text-center w-full max-w-sm">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">Factorial Calculator</h2>
+          <input
+            type="number"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            placeholder="Enter a non-negative integer"
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+          />
+          <button
+            onClick={handleCalculate}
+            className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-600 transition duration-200"
+          >
+            Calculate Factorial
+          </button>
+          {result && (
+            <p className="mt-4 text-lg font-medium text-gray-700">{result}</p>
+          )}
+        </div>
+      );
+    };
+
+    // Render the React component
+    ReactDOM.createRoot(document.getElementById("root")).render(<FactorialCalculator />);
+  </script>
+</body>
+</html>
